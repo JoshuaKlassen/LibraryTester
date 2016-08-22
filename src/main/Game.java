@@ -15,6 +15,8 @@ public class Game extends JGame{
 	
 	public Game(int screenWidth, int screenHeight) {
 		super(screenWidth, screenHeight);
+		super.setJFrame(getDefaultJFrame());
+		super.toggleFullScreen();
 		
 		gameState = new GameState(this);
 		transitionState(gameState);

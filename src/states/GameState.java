@@ -1,7 +1,9 @@
 package states;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
+import entities.Player;
 import jgame.entities.ActorManager;
 import jgame.environment.EnvironmentLayer;
 import jgame.environment.EnvironmentManager;
@@ -14,10 +16,11 @@ import jgame.game.InputKey;
 import jgame.game.JGame;
 import jgame.game.State;
 import jgame.graphics.Camera;
+import jgame.graphics.GraphicsUtility;
+import jgame.graphics.IMesh;
 import jgame.graphics.JGraphics;
 import jgame.util.Vector2;
 import main.Game;
-import entities.Player;
 
 public class GameState extends State {
 
@@ -52,9 +55,17 @@ public class GameState extends State {
 		
 		Tile.TILE_SIZE = 32;
 		
+		BufferedImage tileImage = GraphicsUtility.loadImage("/TileSet.png");
+		
+		IMesh tileMesh = new IMesh(){
+			public void render(JGraphics g, Vector2 position){
+				g.drawImage(tileImage, position, Tile.TILE_SIZE * 2, Tile.TILE_SIZE * 2);
+			}
+		};
+		
 		for(int i = 0; i < 90; i ++){
 			for(int j = 0; j < 90; j ++){
-				Tile t = new Tile(environmentManager, 1, new Vector2(i*Tile.TILE_SIZE, j*Tile.TILE_SIZE), null);
+				Tile t = new Tile(environmentManager, 1, new Vector2(i*Tile.TILE_SIZE, j*Tile.TILE_SIZE), tileMesh);
 				layer.spawn(t);
 			}
 		}
@@ -77,22 +88,6 @@ public class GameState extends State {
 			System.exit(0);
 		}
 		
-		if(up.isPressed()){
-			player.velocity().y = -5;
-		}else if(down.isPressed()){
-			player.velocity().y = 5;
-		}else{
-			player.velocity().y = 0;
-		}
-		
-		
-		if(left.isPressed()){
-			player.velocity().x = -5;
-		}else if(right.isPressed()){
-			player.velocity().x = 5;
-		}else{
-			player.velocity().x = 0;
-		}
 		
 		camera.update();
 		levelOne.update();
