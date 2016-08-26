@@ -3,6 +3,8 @@ package states;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import org.jruby.embed.PathType;
+
 import entities.Player;
 import jgame.entities.ActorManager;
 import jgame.environment.EnvironmentLayer;
@@ -19,6 +21,7 @@ import jgame.graphics.Camera;
 import jgame.graphics.GraphicsUtility;
 import jgame.graphics.IMesh;
 import jgame.graphics.JGraphics;
+import jgame.util.JRubyScriptingEngine;
 import jgame.util.Vector2;
 import main.Game;
 
@@ -38,7 +41,9 @@ public class GameState extends State {
 	
 	private LevelData levelOneData;
 	
-	Camera camera;
+	private Camera camera;
+	
+	private String testEntityScriptPath = "Scripts/TestEntity.rb";
 	
 	public GameState(JGame game) {
 		super(game);
@@ -79,6 +84,10 @@ public class GameState extends State {
 		camera.follow(player);
 		camera.startFollowing();
 		levelOne.setCamera(camera);
+		
+		JRubyScriptingEngine.addScript(testEntityScriptPath);
+		JRubyScriptingEngine.getScriptingContainer().put("gameState", this);
+		JRubyScriptingEngine.getScriptingContainer().runScriptlet(PathType.ABSOLUTE, testEntityScriptPath);
 	}
 
 
@@ -91,6 +100,10 @@ public class GameState extends State {
 		
 		camera.update();
 		levelOne.update();
+	}
+	
+	public JLevel getCurrentLevel(){
+		return levelOne;
 	}
 
 	@Override

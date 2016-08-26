@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.image.BufferedImage;
 
+import org.jruby.embed.PathType;
+
 import jgame.entities.ActorManager;
 import jgame.entities.Mob;
 import jgame.game.INPUT_KEY;
@@ -11,6 +13,7 @@ import jgame.graphics.Animation;
 import jgame.graphics.GraphicsUtility;
 import jgame.graphics.JGraphics;
 import jgame.graphics.Sprite;
+import jgame.util.JRubyScriptingEngine;
 import jgame.util.Vector2;
 
 public class Player extends Mob{
@@ -47,6 +50,7 @@ public class Player extends Mob{
 	private InputKey right = new InputKey(false, INPUT_KEY.RIGHT);
 	private InputKey shift = new InputKey(false, INPUT_KEY.VK_SHIFT);
 	
+	private String scriptFilePath = "Scripts/TestScript.rb";
 	
 	public Player(ActorManager actorManager) {
 		super(actorManager);
@@ -90,6 +94,7 @@ public class Player extends Mob{
 			}
 		}else{
 			if(!Vector2.equals(velocity, lastVelocity)){
+				JRubyScriptingEngine.getScriptingContainer().runScriptlet(PathType.ABSOLUTE, scriptFilePath);
 				currentAnimation.stop();
 				if(Math.abs(direction.x) > Math.abs(direction.y)){
 					if(direction.x < 0){
@@ -186,6 +191,8 @@ public class Player extends Mob{
 		
 		currentAnimation = walkingDownAnimation;
 		currentAnimation.start();
+		
+		JRubyScriptingEngine.addScript(scriptFilePath);
 	}
 	
 	private void createWalkingAnimations(){

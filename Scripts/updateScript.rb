@@ -1,0 +1,1 @@
+testMob.position.x = 5
