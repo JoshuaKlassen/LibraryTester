@@ -1,1 +1,1 @@
-testMob.position.x = 5
+mob.position.x = 5
