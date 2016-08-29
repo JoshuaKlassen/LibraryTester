@@ -9,8 +9,8 @@ updateScript = 'Scripts/updateScript.rb'
 JRubyScriptingEngine.addScript(updateScript);
 
 class TestMob < Mob
-  def initialize(actorManager)
-    super(actorManager)
+  def initialize(actorManager, initalizeScriptPath)
+    super(actorManager, initalizeScriptPath)
     #position = Vector2.new
   end
   
@@ -19,6 +19,7 @@ class TestMob < Mob
   end
 end
 
-testMob = TestMob.new(gameState.getCurrentLevel().getActorManager())
-testMob.setUpdateScriptPath(updateScript)
+testMob = TestMob.new(gameState.getCurrentLevel().getActorManager(), "")
+testMob.setUpdateScriptPath("")
+testMob.velocity.x = 1
 testMob.spawn()

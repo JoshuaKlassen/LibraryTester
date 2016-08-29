@@ -21,7 +21,9 @@ import jgame.graphics.Camera;
 import jgame.graphics.GraphicsUtility;
 import jgame.graphics.IMesh;
 import jgame.graphics.JGraphics;
+import jgame.util.AnimationLoader;
 import jgame.util.JRubyScriptingEngine;
+import jgame.util.ResourceManager;
 import jgame.util.Vector2;
 import main.Game;
 

@@ -16,6 +16,8 @@ import jgame.game.State;
 import jgame.graphics.GraphicsUtility;
 import jgame.graphics.JGraphics;
 import jgame.graphics.Sprite;
+import jgame.util.AnimationLoader;
+import jgame.util.ResourceManager;
 import jgame.util.Utility;
 import jgame.util.Vector2;
 import states.GameState;
@@ -34,6 +36,7 @@ public class Game extends JGame {
 		super.setJFrame(getDefaultJFrame());
 		// super.toggleFullScreen();
 
+		ResourceManager.registerLoader("Animation", new AnimationLoader());
 		gameState = new GameState(this);
 		transitionState(gameState);
 	}
